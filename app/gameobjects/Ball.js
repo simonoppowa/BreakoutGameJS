@@ -1,4 +1,5 @@
 /* The ball in the game */
+//TEST COMMENT//
 var Ball = function() {
 }
 
