@@ -44,14 +44,17 @@ var breakOutGame = (function () {
         var brickPosX = 10;
         var brickPosY = 10;
         var index = 0;
+        var brickColor;
+        
         for(var j = 0; j < BRICK_ROWS; j++) {
+            brickColor = privateSetBrickColor(j);
             for(var i = 0; i < BRICK_COLUMNS; i++) {
-                bricks[index] = new Brick(canvas.getContext("2d"), brickPosX, brickPosY, "red", BRICK_WIDTH, BRICK_HEIGHT)
-                brickPosX += 45;
+                bricks[index] = new Brick(canvas.getContext("2d"), brickPosX, brickPosY, brickColor, BRICK_WIDTH, BRICK_HEIGHT)
+                brickPosX += (BRICK_WIDTH + 5);
                 index++;
             }
             brickPosX = 10;
-            brickPosY += 15;
+            brickPosY += (BRICK_HEIGHT + 5);
         }
     }
 
@@ -59,6 +62,19 @@ var breakOutGame = (function () {
 		privateCanvas = canvas;
 		privateContext = canvas.getContext("2d");
 	}
+    
+    function privateSetBrickColor(row) {
+        switch(row) {
+            case 2:
+                return "#E2F469";
+            case 3:
+                return "#DB6F31";
+            case 4:
+                return "#4EAC6C";
+            default:
+                return "#C31D21";
+        }
+    }
 
 	function publicInit(canvas, difficulty) {
         console.log("Breakout, here we go!");
