@@ -26,8 +26,34 @@ var breakOutGame = (function () {
 
 	function privateDraw() {
         console.log("Drawing!");
+        privateDrawBricks();
         window.requestAnimationFrame(privateDraw);
 	}
+    
+    function privateDrawBricks() {
+        var index = 0;
+        for(var j = 0; j < BRICK_ROWS; j++) {
+            for(var i = 0; i < BRICK_COLUMNS; i++) {
+                bricks[index].draw();
+                index++;
+            }
+        }
+    }
+    
+    function privateSetupBricks() {
+        var brickPosX = 10;
+        var brickPosY = 10;
+        var index = 0;
+        for(var j = 0; j < BRICK_ROWS; j++) {
+            for(var i = 0; i < BRICK_COLUMNS; i++) {
+                bricks[index] = new Brick(canvas.getContext("2d"), brickPosX, brickPosY, "red", BRICK_WIDTH, BRICK_HEIGHT)
+                brickPosX += 45;
+                index++;
+            }
+            brickPosX = 10;
+            brickPosY += 15;
+        }
+    }
 
 	function privateSetContext(canvas) {
 		privateCanvas = canvas;
@@ -37,6 +63,7 @@ var breakOutGame = (function () {
 	function publicInit(canvas, difficulty) {
         console.log("Breakout, here we go!");
 		privateSetContext(canvas);
+        privateSetupBricks();
 		window.requestAnimationFrame(privateDraw);
 	}
 
