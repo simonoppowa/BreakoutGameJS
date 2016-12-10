@@ -27,6 +27,7 @@ var breakOutGame = (function () {
 	function privateDraw() {
         console.log("Drawing!");
         privateDrawBricks();
+        privateDrawPaddle();
         window.requestAnimationFrame(privateDraw);
 	}
     
@@ -40,6 +41,11 @@ var breakOutGame = (function () {
         }
     }
     
+    function privateDrawPaddle() {
+        paddle = new Paddle(canvas.getContext("2d"));
+        paddle.draw();
+    }
+    
     function privateSetupBricks() {
         var brickPosX = 10;
         var brickPosY = 10;
@@ -49,7 +55,7 @@ var breakOutGame = (function () {
         for(var j = 0; j < BRICK_ROWS; j++) {
             brickColor = privateSetBrickColor(j);
             for(var i = 0; i < BRICK_COLUMNS; i++) {
-                bricks[index] = new Brick(canvas.getContext("2d"), brickPosX, brickPosY, brickColor, BRICK_WIDTH, BRICK_HEIGHT)
+                bricks[index] = new Brick(canvas.getContext("2d"), brickPosX, brickPosY, brickColor, BRICK_WIDTH, BRICK_HEIGHT);
                 brickPosX += (BRICK_WIDTH + 5);
                 index++;
             }
