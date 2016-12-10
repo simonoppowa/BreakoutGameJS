@@ -23,6 +23,8 @@ var breakOutGame = (function () {
 	var bricks = [];
 	var paddle;
 	var ball;
+    
+    var mouseX;
 
 	function privateDraw() {
         console.log("Drawing!");
@@ -42,8 +44,15 @@ var breakOutGame = (function () {
     }
     
     function privateDrawPaddle() {
-        paddle = new Paddle(canvas.getContext("2d"));
+        canvas.addEventListener('mousemove', updatePaddlePosition);
+        
         paddle.draw();
+        paddle.updateXPos(mouseX);
+    }
+    
+    function updatePaddlePosition() {
+        mouseX = event.clientX-40;
+        privateContext.clearRect(0,0, GAME_WIDTH, GAME_HEIGHT);
     }
     
     function privateSetupBricks() {
@@ -86,6 +95,7 @@ var breakOutGame = (function () {
         console.log("Breakout, here we go!");
 		privateSetContext(canvas);
         privateSetupBricks();
+        paddle = new Paddle(canvas.getContext("2d"));
 		window.requestAnimationFrame(privateDraw);
 	}
 

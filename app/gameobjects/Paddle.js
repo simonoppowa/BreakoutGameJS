@@ -21,10 +21,15 @@ var Paddle = function(context) {
     this.paddleHeight = PADDLE_HEIGHT;
 }
 
+Paddle.prototype.getXPos = function() {
+    return this.xPos;
+}
+
 Paddle.prototype.draw = function() {
     this.context.fillStyle = this.color;
     this.context.fillRect(this.xPos, this.yPos, this.paddleWidth, this.paddleHeight);
 }
 
 Paddle.prototype.updateXPos = function(newPos) {
+    this.xPos = newPos;
 }
