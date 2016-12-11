@@ -12,7 +12,7 @@ var Ball = function(context, ballsize) {
     this.ballX = DEFAULT_XPOS;
     this.ballY = DEFAULT_YPOS;
     
-    this.ballspeed = 1;
+    this.ballspeed = this.createRandomSpeed();
     this.color = DEFAULT_COLOR;
 }
 
@@ -21,6 +21,15 @@ Ball.prototype.draw = function() {
     this.context.arc(this.ballX, this.ballY, this.ballsize, 0, 2*Math.PI, true);
     this.context.fillStyle = this.color;
     this.context.fill();
+}
+
+Ball.prototype.updatePos = function() {
+    this.ballY += this.ballspeed;
+    this.ballX += this.ballspeed;
+}
+
+Ball.prototype.createRandomSpeed = function() {
+    return Math.floor((Math.random() * 1) + 3);
 }
 
 Ball.prototype.bounceHorizontally = function() {

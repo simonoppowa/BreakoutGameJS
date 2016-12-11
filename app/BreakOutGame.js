@@ -53,6 +53,7 @@ var breakOutGame = (function () {
     
     function privateDrawBall() {
         ball.draw();
+        ball.updatePos();
     }
     
     function updatePaddlePosition() {
