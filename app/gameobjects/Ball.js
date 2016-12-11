@@ -18,6 +18,18 @@ var Ball = function(context, ballsize) {
     
 }
 
+Ball.prototype.getXPos = function() {
+    return this.ballX;
+}
+
+Ball.prototype.getYPos = function() {
+    return this.ballY;
+}
+
+Ball.prototype.getBallsize = function() {
+    return this.ballsize;
+}
+
 Ball.prototype.draw = function() {
     this.context.beginPath();
     this.context.arc(this.ballX, this.ballY, this.ballsize, 0, 2*Math.PI, true);
@@ -30,7 +42,7 @@ Ball.prototype.updatePos = function() {
     this.ballX += this.ballXSpeed;
 }
 
-Ball.prototype.checkCollisions = function (canvasWidth, canvasHeight) { 
+Ball.prototype.checkBorderCollisions = function (canvasWidth, canvasHeight) { 
     var topBorder = this.ballY - this.ballsize;
     var bottomBorder = this.ballY + this.ballsize;
     var rightBorder = this.ballX + this.ballsize;

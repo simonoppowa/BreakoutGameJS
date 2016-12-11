@@ -29,6 +29,8 @@ var breakOutGame = (function () {
 	function privateDraw() {
         console.log("Drawing!");
         privateContext.clearRect(0,0, GAME_WIDTH, GAME_HEIGHT);
+        
+        privateCheckCollision();
         privateDrawBricks();
         privateDrawPaddle();
         privateDrawBall();
@@ -52,9 +54,16 @@ var breakOutGame = (function () {
     }
     
     function privateDrawBall() {
-        ball.checkCollisions(GAME_WIDTH, GAME_HEIGHT);
+        ball.checkBorderCollisions(GAME_WIDTH, GAME_HEIGHT);
         ball.draw();
         ball.updatePos();
+    }
+    
+    function privateCheckCollision() {
+        collisionChecker.checkCollision(paddle, ball);
+        for(var i = 0; i < 65; i++) {
+            collisionChecker.checkCollision(bricks[i], ball);
+        }
     }
     
     function updatePaddlePosition() {
