@@ -30,6 +30,7 @@ var breakOutGame = (function () {
         console.log("Drawing!");
         privateDrawBricks();
         privateDrawPaddle();
+        privateDrawBall();
         window.requestAnimationFrame(privateDraw);
 	}
     
@@ -48,6 +49,10 @@ var breakOutGame = (function () {
         
         paddle.draw();
         paddle.updateXPos(mouseX);
+    }
+    
+    function privateDrawBall() {
+        ball.draw();
     }
     
     function updatePaddlePosition() {
@@ -96,6 +101,7 @@ var breakOutGame = (function () {
 		privateSetContext(canvas);
         privateSetupBricks();
         paddle = new Paddle(canvas.getContext("2d"));
+        ball = new Ball(canvas.getContext("2d"), BALLSIZE);
 		window.requestAnimationFrame(privateDraw);
 	}
 
