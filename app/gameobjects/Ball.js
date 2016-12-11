@@ -12,8 +12,10 @@ var Ball = function(context, ballsize) {
     this.ballX = DEFAULT_XPOS;
     this.ballY = DEFAULT_YPOS;
     
-    this.ballspeed = this.createRandomSpeed();
+    this.ballXSpeed = this.createRandomSpeed();
+    this.ballYSpeed = this.ballXSpeed;
     this.color = DEFAULT_COLOR;
+    
 }
 
 Ball.prototype.draw = function() {
@@ -24,8 +26,23 @@ Ball.prototype.draw = function() {
 }
 
 Ball.prototype.updatePos = function() {
-    this.ballY += this.ballspeed;
-    this.ballX += this.ballspeed;
+    this.ballY += this.ballYSpeed;
+    this.ballX += this.ballXSpeed;
+}
+
+Ball.prototype.checkCollisions = function (canvasWidth, canvasHeight) { 
+    var topBorder = this.ballY - this.ballsize;
+    var bottomBorder = this.ballY + this.ballsize;
+    var rightBorder = this.ballX + this.ballsize;
+    var leftBorder = this.ballX - this.ballsize;
+    
+    if(rightBorder > canvasWidth || leftBorder < 0) {
+        this.bounceVertically();
+    }
+    
+    if (topBorder < 0 || bottomBorder > canvasHeight) {
+        this.bounceHorizontally();
+    }
 }
 
 Ball.prototype.createRandomSpeed = function() {
@@ -33,7 +50,9 @@ Ball.prototype.createRandomSpeed = function() {
 }
 
 Ball.prototype.bounceHorizontally = function() {
+    this.ballYSpeed *= -1;
 }
 
 Ball.prototype.bounceVertically = function() {
+    this.ballXSpeed *= -1;
 }

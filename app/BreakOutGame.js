@@ -47,12 +47,12 @@ var breakOutGame = (function () {
     
     function privateDrawPaddle() {
         canvas.addEventListener('mousemove', updatePaddlePosition);
-        
         paddle.draw();
         paddle.updateXPos(mouseX);
     }
     
     function privateDrawBall() {
+        ball.checkCollisions(GAME_WIDTH, GAME_HEIGHT);
         ball.draw();
         ball.updatePos();
     }
