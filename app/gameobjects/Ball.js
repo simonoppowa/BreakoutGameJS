@@ -29,7 +29,7 @@ Ball.prototype.updatePos = function() {
 }
 
 Ball.prototype.createRandomSpeed = function() {
-    return Math.floor((Math.random() * 1) + 3);
+    return Math.floor((Math.random() * 3) + 1);
 }
 
 Ball.prototype.bounceHorizontally = function() {

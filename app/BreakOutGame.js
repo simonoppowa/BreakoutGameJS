@@ -28,6 +28,7 @@ var breakOutGame = (function () {
 
 	function privateDraw() {
         console.log("Drawing!");
+        privateContext.clearRect(0,0, GAME_WIDTH, GAME_HEIGHT);
         privateDrawBricks();
         privateDrawPaddle();
         privateDrawBall();
@@ -58,7 +59,6 @@ var breakOutGame = (function () {
     
     function updatePaddlePosition() {
         mouseX = event.clientX-40;
-        privateContext.clearRect(0,0, GAME_WIDTH, GAME_HEIGHT);
     }
     
     function privateSetupBricks() {

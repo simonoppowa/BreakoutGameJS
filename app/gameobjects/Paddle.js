@@ -31,5 +31,6 @@ Paddle.prototype.draw = function() {
 }
 
 Paddle.prototype.updateXPos = function(newPos) {
+    if(newPos == undefined) return;
     this.xPos = newPos;
 }
