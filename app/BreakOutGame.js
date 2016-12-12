@@ -41,7 +41,9 @@ var breakOutGame = (function () {
         var index = 0;
         for(var j = 0; j < BRICK_ROWS; j++) {
             for(var i = 0; i < BRICK_COLUMNS; i++) {
-                bricks[index].draw();
+                if(bricks[index].getStatus() == 1) {
+                    bricks[index].draw();
+                }
                 index++;
             }
         }
@@ -61,8 +63,12 @@ var breakOutGame = (function () {
     
     function privateCheckCollision() {
         collisionChecker.checkCollision(paddle, ball);
-        for(var i = 0; i < 65; i++) {
-            collisionChecker.checkCollision(bricks[i], ball);
+        for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
+            if(bricks[i].getStatus() == 1) {
+                if(collisionChecker.checkCollision(bricks[i], ball)) {
+                bricks[i].setStatus();
+                }
+            }
         }
     }
     

@@ -8,7 +8,9 @@ var collisionChecker = (function () {
            object.getYPos() + object.getHeight() > ball.getYPos()) {
             console.log("Collision!");
             ball.bounceHorizontally();
+            return true;
         }
+        return false;
 	}
 
 	return {

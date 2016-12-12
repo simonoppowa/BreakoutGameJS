@@ -9,6 +9,7 @@ var Brick = function(context, xPos, yPos, color, width, height) {
     this.yPos = yPos;
     
     this.color = color;
+    this.status = 1;
 };
 
 Brick.prototype.getXPos = function () {
@@ -25,6 +26,14 @@ Brick.prototype.getWidth = function() {
 
 Brick.prototype.getHeight = function() {
     return this.height;
+}
+
+Brick.prototype.getStatus = function() {
+    return this.status;
+}
+
+Brick.prototype.setStatus  = function() {
+    this.status = 0;
 }
 
 Brick.prototype.draw = function() {
