@@ -66,7 +66,8 @@ var breakOutGame = (function () {
         for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
             if(bricks[i].getStatus() == 1) {
                 if(collisionChecker.checkCollision(bricks[i], ball)) {
-                bricks[i].setStatus();
+                    bricks[i].setStatus();
+                    privateCheckWin();
                 }
             }
         }
@@ -111,6 +112,39 @@ var breakOutGame = (function () {
                 return "#C31D21";
         }
     }
+    
+    function privateInstantWin(keyEvent) { //FOR DEBUGGING (Press Tab for Instant win)
+        if(keyEvent.keyCode == 9) {
+            for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
+                bricks[i].setStatus();
+            }
+            privateCheckWin();
+            console.log("Cheater!");
+        }
+        
+    }
+    
+    function privateCheckWin() {
+        var win = BRICK_COLUMNS * BRICK_ROWS;
+        var winCount = 0;
+        
+        for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
+            if(bricks[i].getStatus() == 0) {
+                winCount++;
+            }
+        }
+        if(win == winCount) privateYouWon();
+    }
+    
+    function privateYouWon() {
+        privateContext.fillStyle = 'green';
+        privateContext.font = "40px serif";
+        privateContext.textAlign = 'center';
+        privateContext.fillText("Congratulation! You Won!", GAME_WIDTH/2, GAME_HEIGHT/2);
+        ball.ballXSpeed = 0;
+        ball.ballYSpeed = 0;
+        window.requestAnimationFrame(privateYouWon);
+    }
 
 	function publicInit(canvas, difficulty) {
         console.log("Breakout, here we go!");
@@ -118,6 +152,12 @@ var breakOutGame = (function () {
         privateSetupBricks();
         paddle = new Paddle(canvas.getContext("2d"));
         ball = new Ball(canvas.getContext("2d"), BALLSIZE);
+        
+        canvas.setAttribute('tabindex', '0');
+        canvas.focus();
+        canvas.addEventListener("keydown", privateInstantWin, false);
+        
+        
 		window.requestAnimationFrame(privateDraw);
 	}
 
