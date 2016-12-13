@@ -25,6 +25,7 @@ var breakOutGame = (function () {
 	var ball;
     
     var mouseX;
+    var pause = false;
 
 	function privateDraw() {
         console.log("Drawing!");
@@ -34,7 +35,8 @@ var breakOutGame = (function () {
         privateDrawBricks();
         privateDrawPaddle();
         privateDrawBall();
-        window.requestAnimationFrame(privateDraw);
+        
+        if(pause == false) window.requestAnimationFrame(privateDraw);
 	}
     
     function privateDrawBricks() {
@@ -113,15 +115,14 @@ var breakOutGame = (function () {
         }
     }
     
-    function privateInstantWin(keyEvent) { //FOR DEBUGGING (Press Tab for Instant win)
+    function privateInstantWin(keyEvent) { //FOR DEBUGGING (Press Tab for instant win)
         if(keyEvent.keyCode == 9) {
             for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
                 bricks[i].setStatus();
             }
-            privateCheckWin();
             console.log("Cheater!");
+            privateCheckWin();
         }
-        
     }
     
     function privateCheckWin() {
@@ -141,8 +142,9 @@ var breakOutGame = (function () {
         privateContext.font = "40px serif";
         privateContext.textAlign = 'center';
         privateContext.fillText("Congratulation! You Won!", GAME_WIDTH/2, GAME_HEIGHT/2);
-        ball.ballXSpeed = 0;
-        ball.ballYSpeed = 0;
+        
+        pause = true;
+        
         window.requestAnimationFrame(privateYouWon);
     }
 
@@ -151,12 +153,11 @@ var breakOutGame = (function () {
 		privateSetContext(canvas);
         privateSetupBricks();
         paddle = new Paddle(canvas.getContext("2d"));
-        ball = new Ball(canvas.getContext("2d"), BALLSIZE);
+        ball = new Ball(privateContext, BALLSIZE);
         
         canvas.setAttribute('tabindex', '0');
         canvas.focus();
         canvas.addEventListener("keydown", privateInstantWin, false);
-        
         
 		window.requestAnimationFrame(privateDraw);
 	}
