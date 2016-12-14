@@ -52,7 +52,7 @@ Ball.prototype.checkBorderCollisions = function (canvasWidth, canvasHeight) {
         this.bounceVertically();
     }
     
-    if (topBorder < 0 || bottomBorder > canvasHeight) {
+    if (topBorder < 0) {
         this.bounceHorizontally();
     }
 }

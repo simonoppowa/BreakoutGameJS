@@ -31,6 +31,7 @@ var breakOutGame = (function () {
         console.log("Drawing!");
         privateContext.clearRect(0,0, GAME_WIDTH, GAME_HEIGHT);
         
+        privateCheckLose();
         privateCheckCollision();
         privateDrawBricks();
         privateDrawPaddle();
@@ -137,6 +138,12 @@ var breakOutGame = (function () {
         if(win == winCount) privateYouWon();
     }
     
+    function privateCheckLose() {
+        if(ball.getYPos() > GAME_HEIGHT - BALLSIZE) {
+            privateYouLost();
+        }
+    }
+    
     function privateYouWon() {
         privateContext.fillStyle = 'green';
         privateContext.font = "40px serif";
@@ -146,6 +153,17 @@ var breakOutGame = (function () {
         pause = true;
         
         window.requestAnimationFrame(privateYouWon);
+    }
+    
+    function privateYouLost() {
+        privateContext.fillStyle = 'green';
+        privateContext.font = "30px serif";
+        privateContext.textAlign = 'center';
+        privateContext.fillText("Game Over. Please refresh for restart", GAME_WIDTH/2, GAME_HEIGHT/2);
+        
+        pause = true;
+        
+        window.requestAnimationFrame(privateYouLost);
     }
 
 	function publicInit(canvas, difficulty) {
