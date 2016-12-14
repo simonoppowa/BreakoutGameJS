@@ -9,32 +9,32 @@ var Brick = function(context, xPos, yPos, color, width, height) {
     this.yPos = yPos;
     
     this.color = color;
-    this.status = 1;
+    this.status = true;
 };
 
-Brick.prototype.getXPos = function () {
+Brick.prototype.getXPos = function() {
     return this.xPos;
-}
+};
 
-Brick.prototype.getYPos = function () {
+Brick.prototype.getYPos = function() {
     return this.yPos;
-}
+};
 
 Brick.prototype.getWidth = function() {
     return this.width;
-}
+};
 
 Brick.prototype.getHeight = function() {
     return this.height;
-}
+};
 
 Brick.prototype.getStatus = function() {
     return this.status;
-}
+};
 
 Brick.prototype.setStatus  = function() {
-    this.status = 0;
-}
+    this.status = false;
+};
 
 Brick.prototype.draw = function() {
     this.context.fillStyle = this.color;

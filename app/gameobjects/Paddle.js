@@ -19,30 +19,32 @@ var Paddle = function(context) {
     
     this.paddleWidth = PADDLE_WIDTH;
     this.paddleHeight = PADDLE_HEIGHT;
-}
+};
 
 Paddle.prototype.getXPos = function() {
     return this.xPos;
-}
+};
 
 Paddle.prototype.getYPos = function() {
     return this.yPos;
-}
+};
 
 Paddle.prototype.getWidth = function() {
     return this.paddleWidth;
-}
+};
 
 Paddle.prototype.getHeight = function() {
     return this.paddleHeight;
-}
+};
 
 Paddle.prototype.draw = function() {
     this.context.fillStyle = this.color;
     this.context.fillRect(this.xPos, this.yPos, this.paddleWidth, this.paddleHeight);
-}
+};
 
 Paddle.prototype.updateXPos = function(newPos) {
-    if(newPos == undefined) return;
+    if(newPos === undefined) {
+        return;
+    }
     this.xPos = newPos;
-}
+};

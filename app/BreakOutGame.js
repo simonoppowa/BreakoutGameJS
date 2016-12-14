@@ -29,7 +29,7 @@ var breakOutGame = (function () {
 
 	function privateDraw() {
         console.log("Drawing!");
-        privateContext.clearRect(0,0, GAME_WIDTH, GAME_HEIGHT);
+        privateContext.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         
         privateCheckLose();
         privateCheckCollision();
@@ -37,7 +37,9 @@ var breakOutGame = (function () {
         privateDrawPaddle();
         privateDrawBall();
         
-        if(pause == false) window.requestAnimationFrame(privateDraw);
+        if(pause === false) {
+            window.requestAnimationFrame(privateDraw);
+        }
 	}
     
     function privateDrawBricks() {
@@ -67,7 +69,7 @@ var breakOutGame = (function () {
     function privateCheckCollision() {
         collisionChecker.checkCollision(paddle, ball);
         for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
-            if(bricks[i].getStatus() == 1) {
+            if(bricks[i].getStatus() === true) {
                 if(collisionChecker.checkCollision(bricks[i], ball)) {
                     bricks[i].setStatus();
                     privateCheckWin();
@@ -89,7 +91,7 @@ var breakOutGame = (function () {
         for(var j = 0; j < BRICK_ROWS; j++) {
             brickColor = privateSetBrickColor(j);
             for(var i = 0; i < BRICK_COLUMNS; i++) {
-                bricks[index] = new Brick(canvas.getContext("2d"), brickPosX, brickPosY, brickColor, BRICK_WIDTH, BRICK_HEIGHT);
+                bricks[index] = new Brick(privateContext, brickPosX, brickPosY, brickColor, BRICK_WIDTH, BRICK_HEIGHT);
                 brickPosX += (BRICK_WIDTH + 5);
                 index++;
             }
@@ -135,7 +137,9 @@ var breakOutGame = (function () {
                 winCount++;
             }
         }
-        if(win == winCount) privateYouWon();
+        if(win == winCount) {
+            privateYouWon();
+        }
     }
     
     function privateCheckLose() {
@@ -146,9 +150,9 @@ var breakOutGame = (function () {
     
     function privateYouWon() {
         privateContext.fillStyle = 'green';
-        privateContext.font = "40px serif";
+        privateContext.font = "40px Roboto Condensed Light";
         privateContext.textAlign = 'center';
-        privateContext.fillText("Congratulation! You Won!", GAME_WIDTH/2, GAME_HEIGHT/2);
+        privateContext.fillText("Congratulations! You Won!", GAME_WIDTH/2, GAME_HEIGHT/2);
         
         pause = true;
         
@@ -157,7 +161,7 @@ var breakOutGame = (function () {
     
     function privateYouLost() {
         privateContext.fillStyle = 'green';
-        privateContext.font = "30px serif";
+        privateContext.font = "30px Roboto Condensed Light";
         privateContext.textAlign = 'center';
         privateContext.fillText("Game Over. Please refresh for restart", GAME_WIDTH/2, GAME_HEIGHT/2);
         
@@ -170,7 +174,7 @@ var breakOutGame = (function () {
         console.log("Breakout, here we go!");
 		privateSetContext(canvas);
         privateSetupBricks();
-        paddle = new Paddle(canvas.getContext("2d"));
+        paddle = new Paddle(privateContext);
         ball = new Ball(privateContext, BALLSIZE);
         
         canvas.setAttribute('tabindex', '0');
