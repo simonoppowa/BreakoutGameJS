@@ -9,14 +9,23 @@
 
 <body>
 	<h1>BreakOut</h1>
-	<p id="canvas">
-		<canvas id="breakoutcanvas" width="600" height="500"></canvas>
+    <div id = "mode">
+        <p>Choose a difficulty:</p>
+        <select class="modedropdown">
+            <option value="1">Easy</option>
+            <option value="2">Normal</option>
+            <option value="3">Hard</option>
+        </select>
+        <button type="button" id="modebutton" >Start</button>
+    </div>
+	<p id="canvas"><canvas id="breakoutcanvas" width="600" height="500"></canvas>
 	</p>
 	<script src="app/gameobjects/Ball.js"></script>
 	<script src="app/gameobjects/Paddle.js"></script>
 	<script src="app/gameobjects/Brick.js"></script>
 	<script src="app/collisionChecker.js"></script>
 	<script src="app/BreakOutGame.js"></script>
+    <script src="app/Mode.js"></script>
 </body>
 
 </html>
