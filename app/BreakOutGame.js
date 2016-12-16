@@ -26,8 +26,23 @@ var breakOutGame = (function () {
     
     var mouseX;
     var pause = false;
-
-	function privateDraw() {
+    
+    function publicSetupBreakOut(canvas, difficulty) {
+        console.log("Breakout, here we go!");
+		privateSetContext(canvas);
+        privateSetupBricks();
+        paddle = new Paddle(privateContext);
+        ball = new Ball(privateContext, BALLSIZE);
+        ball.setDifficulty(difficulty);
+        
+        canvas.setAttribute('tabindex', '0');
+        canvas.focus();
+        canvas.addEventListener("keydown", privateInstantWin, false);
+        
+		window.requestAnimationFrame(privateDraw);
+    }
+    
+	function privateDraw(canvas, difficulty) {
         console.log("Drawing!");
         privateContext.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         
@@ -119,7 +134,7 @@ var breakOutGame = (function () {
     }
     
     function privateInstantWin(keyEvent) { //FOR DEBUGGING (Press Tab for instant win)
-        if(keyEvent.keyCode == 9) {
+        if(keyEvent.keyCode == 9 && pause != true) {
             for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
                 bricks[i].setStatus();
             }
@@ -170,24 +185,10 @@ var breakOutGame = (function () {
         window.requestAnimationFrame(privateYouLost);
     }
 
-	function publicInit(canvas, difficulty) {
-        console.log("Breakout, here we go!");
-		privateSetContext(canvas);
-        privateSetupBricks();
-        paddle = new Paddle(privateContext);
-        ball = new Ball(privateContext, BALLSIZE);
-        
-        canvas.setAttribute('tabindex', '0');
-        canvas.focus();
-        canvas.addEventListener("keydown", privateInstantWin, false);
-        
-		window.requestAnimationFrame(privateDraw);
-	}
-
 	return {
-		init: publicInit
+		init: publicSetupBreakOut
 	};
 })();
 
 var canvas = document.getElementById("breakoutcanvas");
-breakOutGame.init(canvas);
+//breakOutGame.init(canvas);

@@ -12,8 +12,8 @@ var Ball = function(context, ballsize) {
     this.ballX = DEFAULT_XPOS;
     this.ballY = DEFAULT_YPOS;
     
-    this.ballXSpeed = this.createRandomSpeed();
-    this.ballYSpeed = this.ballXSpeed;
+    this.ballXSpeed;
+    this.ballYSpeed;
     this.color = DEFAULT_COLOR;
     
 };
@@ -28,6 +28,17 @@ Ball.prototype.getYPos = function() {
 
 Ball.prototype.getBallsize = function() {
     return this.ballsize;
+};
+
+Ball.prototype.setDifficulty = function(mode) {
+    switch(mode) {
+        case "1":
+            this.ballXSpeed = 1; this.ballYSpeed = 1; break;
+        case "2":
+            this.ballXSpeed = 2; this.ballYSpeed = 2; break;
+        case "3":
+            this.ballXSpeed = 3; this.ballYSpeed = 3; break;
+    }
 };
 
 Ball.prototype.draw = function() {
