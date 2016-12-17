@@ -165,6 +165,7 @@ var breakOutGame = (function () {
     
     function privateCheckLose() {
         if(ball.getYPos() > GAME_HEIGHT - BALLSIZE) {
+            sound.playSound(2);
             privateYouLost();
         }
     }

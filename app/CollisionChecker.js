@@ -6,6 +6,9 @@ var collisionChecker = (function () {
            object.getXPos() + object.getWidth() > ball.getXPos() &&
            object.getYPos() < ball.getYPos() + ball.getBallsize() &&
            object.getYPos() + object.getHeight() > ball.getYPos()) {
+            
+            sound.playSound(3);
+            
             console.log("Collision!");
             ball.bounceHorizontally();
             return true;
