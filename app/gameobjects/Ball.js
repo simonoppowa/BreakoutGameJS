@@ -62,10 +62,13 @@ Ball.prototype.checkBorderCollisions = function(canvasWidth, canvasHeight) {
     var leftBorder = this.xPos - this.ballsize;
     
     if(rightBorder > canvasWidth || leftBorder < 0) {
+        var bounceborder = new Audio("/sounds/bounceborder.wav");
+        sound.playSound(1);
         this.bounceVertically();
     }
     
     if (topBorder < 0) {
+        sound.playSound(1);
         this.bounceHorizontally();
     }
 };
