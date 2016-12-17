@@ -10,13 +10,15 @@
 <body>
 	<h1>BreakOut</h1>
     <div id = "mode">
-        <p>Choose a difficulty:</p>
-        <select class="modedropdown">
+        <div><p id = "modemessage">Choose a difficulty:</p></div>
+        <div id = "modeselect">
+            <select class="modedropdown">
             <option value="1">Easy</option>
             <option value="2">Normal</option>
             <option value="3">Hard</option>
         </select>
         <button type="button" id="modebutton" >Start</button>
+        </div> 
     </div>
 	<p id="canvas"><canvas id="breakoutcanvas" width="600" height="500"></canvas>
 	</p>

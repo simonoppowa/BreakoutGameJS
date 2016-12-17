@@ -17,3 +17,10 @@ body {
 h1 {
 	margin-bottom: 15px;
 }
+
+#modemessage {
+    float: left;
+    margin: 0px;
+    margin-right: 5px;
+}
+
