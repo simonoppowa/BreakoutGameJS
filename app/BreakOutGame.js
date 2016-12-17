@@ -24,25 +24,20 @@ var breakOutGame = (function () {
 	var paddle;
 	var ball;
     
-    var mouseX;
-    var pause = false;
+    var mousePosX;
+    var pauseGame = false;
     
     function publicSetupBreakOut(canvas, difficulty) {
         console.log("Breakout, here we go!");
 		privateSetContext(canvas);
         privateSetupBricks();
-        paddle = new Paddle(privateContext);
-        ball = new Ball(privateContext, BALLSIZE);
-        ball.setDifficulty(difficulty);
-        
-        canvas.setAttribute('tabindex', '0');
-        canvas.focus();
-        canvas.addEventListener("keydown", privateInstantWin, false);
+        privateSetupPaddle();
+        privateSetupBall(difficulty);
         
 		window.requestAnimationFrame(privateDraw);
     }
     
-	function privateDraw(canvas, difficulty) {
+	function privateDraw() {
         console.log("Drawing!");
         privateContext.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
         
@@ -52,27 +47,25 @@ var breakOutGame = (function () {
         privateDrawPaddle();
         privateDrawBall();
         
-        if(pause === false) {
+        if(pauseGame === false) {
             window.requestAnimationFrame(privateDraw);
         }
 	}
     
     function privateDrawBricks() {
         var index = 0;
-        for(var j = 0; j < BRICK_ROWS; j++) {
-            for(var i = 0; i < BRICK_COLUMNS; i++) {
-                if(bricks[index].getStatus() == 1) {
+        for(var j = 0; j < BRICK_ROWS * BRICK_COLUMNS; j++) {
+                if(bricks[index].getStatus() === true) {
                     bricks[index].draw();
                 }
                 index++;
             }
-        }
     }
     
     function privateDrawPaddle() {
-        canvas.addEventListener('mousemove', updatePaddlePosition);
+        canvas.addEventListener('mousemove', privateUpdatePaddlePosition);
         paddle.draw();
-        paddle.updateXPos(mouseX);
+        paddle.updateXPos(mousePosX);
     }
     
     function privateDrawBall() {
@@ -93,9 +86,18 @@ var breakOutGame = (function () {
         }
     }
     
-    function updatePaddlePosition() {
-        mouseX = event.clientX-40;
+    function privateUpdatePaddlePosition() {
+        mousePosX = event.clientX-40;
     }
+    
+    function privateSetContext(canvas) {
+		privateCanvas = canvas;
+		privateContext = canvas.getContext("2d");
+        
+        canvas.setAttribute('tabindex', '0');
+        canvas.focus();
+        canvas.addEventListener("keydown", privateInstantWin, false);
+	}
     
     function privateSetupBricks() {
         var brickPosX = 10;
@@ -114,11 +116,6 @@ var breakOutGame = (function () {
             brickPosY += (BRICK_HEIGHT + 5);
         }
     }
-
-	function privateSetContext(canvas) {
-		privateCanvas = canvas;
-		privateContext = canvas.getContext("2d");
-	}
     
     function privateSetBrickColor(row) {
         switch(row) {
@@ -133,8 +130,17 @@ var breakOutGame = (function () {
         }
     }
     
+    function privateSetupPaddle() {
+        paddle = new Paddle(privateContext);
+    }
+    
+    function privateSetupBall(difficulty) {
+        ball = new Ball(privateContext, BALLSIZE);
+        ball.setDifficulty(difficulty);
+    }
+    
     function privateInstantWin(keyEvent) { //FOR DEBUGGING (Press Tab for instant win)
-        if(keyEvent.keyCode == 9 && pause != true) {
+        if(keyEvent.keyCode == 9 && pauseGame === false) {
             for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
                 bricks[i].setStatus();
             }
@@ -144,15 +150,15 @@ var breakOutGame = (function () {
     }
     
     function privateCheckWin() {
-        var win = BRICK_COLUMNS * BRICK_ROWS;
+        var winNumber = BRICK_COLUMNS * BRICK_ROWS;
         var winCount = 0;
         
         for(var i = 0; i < BRICK_COLUMNS * BRICK_ROWS; i++) {
-            if(bricks[i].getStatus() == 0) {
+            if(bricks[i].getStatus() === false) {
                 winCount++;
             }
         }
-        if(win == winCount) {
+        if(winNumber === winCount) {
             privateYouWon();
         }
     }
@@ -163,24 +169,26 @@ var breakOutGame = (function () {
         }
     }
     
-    function privateYouWon() {
+    function privateSetTextStyle() {
         privateContext.fillStyle = 'green';
         privateContext.font = "40px Roboto Condensed Light";
         privateContext.textAlign = 'center';
+    }
+    
+    function privateYouWon() {
+        privateSetTextStyle();
         privateContext.fillText("Congratulations! You Won!", GAME_WIDTH/2, GAME_HEIGHT/2);
         
-        pause = true;
+        pauseGame = true;
         
         window.requestAnimationFrame(privateYouWon);
     }
     
     function privateYouLost() {
-        privateContext.fillStyle = 'green';
-        privateContext.font = "30px Roboto Condensed Light";
-        privateContext.textAlign = 'center';
+        privateSetTextStyle();
         privateContext.fillText("Game Over. Please refresh for restart", GAME_WIDTH/2, GAME_HEIGHT/2);
         
-        pause = true;
+        pauseGame = true;
         
         window.requestAnimationFrame(privateYouLost);
     }
@@ -191,4 +199,3 @@ var breakOutGame = (function () {
 })();
 
 var canvas = document.getElementById("breakoutcanvas");
-//breakOutGame.init(canvas);

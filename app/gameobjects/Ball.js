@@ -9,8 +9,8 @@ var Ball = function(context, ballsize) {
     
     this.ballsize = ballsize;
     
-    this.ballX = DEFAULT_XPOS;
-    this.ballY = DEFAULT_YPOS;
+    this.xPos = DEFAULT_XPOS;
+    this.yPos = DEFAULT_YPOS;
     
     this.ballXSpeed;
     this.ballYSpeed;
@@ -19,11 +19,11 @@ var Ball = function(context, ballsize) {
 };
 
 Ball.prototype.getXPos = function() {
-    return this.ballX;
+    return this.xPos;
 };
 
 Ball.prototype.getYPos = function() {
-    return this.ballY;
+    return this.yPos;
 };
 
 Ball.prototype.getBallsize = function() {
@@ -38,26 +38,28 @@ Ball.prototype.setDifficulty = function(mode) {
             this.ballXSpeed = 2; this.ballYSpeed = 2; break;
         case "3":
             this.ballXSpeed = 3; this.ballYSpeed = 3; break;
+        default:
+            this.ballXSpeed = 2; this.ballYSpeed = 2; break;
     }
 };
 
 Ball.prototype.draw = function() {
     this.context.beginPath();
-    this.context.arc(this.ballX, this.ballY, this.ballsize, 0, 2 * Math.PI, true);
+    this.context.arc(this.xPos, this.yPos, this.ballsize, 0, 2 * Math.PI, true);
     this.context.fillStyle = this.color;
     this.context.fill();
 };
 
 Ball.prototype.updatePos = function() {
-    this.ballY += this.ballYSpeed;
-    this.ballX += this.ballXSpeed;
+    this.yPos += this.ballYSpeed;
+    this.xPos += this.ballXSpeed;
 };
 
 Ball.prototype.checkBorderCollisions = function(canvasWidth, canvasHeight) {
-    var topBorder = this.ballY - this.ballsize;
-    var bottomBorder = this.ballY + this.ballsize;
-    var rightBorder = this.ballX + this.ballsize;
-    var leftBorder = this.ballX - this.ballsize;
+    var topBorder = this.yPos - this.ballsize;
+    var bottomBorder = this.yPos + this.ballsize;
+    var rightBorder = this.xPos + this.ballsize;
+    var leftBorder = this.xPos - this.ballsize;
     
     if(rightBorder > canvasWidth || leftBorder < 0) {
         this.bounceVertically();
@@ -66,10 +68,6 @@ Ball.prototype.checkBorderCollisions = function(canvasWidth, canvasHeight) {
     if (topBorder < 0) {
         this.bounceHorizontally();
     }
-};
-
-Ball.prototype.createRandomSpeed = function() {
-    return Math.floor((Math.random() * 3) + 1);
 };
 
 Ball.prototype.bounceHorizontally = function() {

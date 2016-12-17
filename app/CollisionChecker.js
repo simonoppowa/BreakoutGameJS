@@ -9,7 +9,7 @@ var collisionChecker = (function () {
             console.log("Collision!");
             ball.bounceHorizontally();
             return true;
-        }
+        }   
         return false;
 	}
 
