@@ -13,7 +13,6 @@ var sound = (function () {
                 return;
         }
         sound.play();
-        sleep(500);
 	}
 
 	return {
